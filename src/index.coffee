@@ -1,17 +1,17 @@
 Presets =
 
-  node: ({ input }) -> "module.exports = #{ json }"
+  node: ({ input }) -> "module.exports = #{ input }"
 
-  browser: ({ input }) -> "export default #{input}"
+  browser: ({ input }) -> "export default #{ input }"
 
-wrap = ( context ) ->
+modularize = ( context ) ->
   do ({ build } = context ) ->
     if build.preset == "js"
-      if ( preset = Presets[ build.target ]) ->
+      if ( preset = Presets[ build.target ])
         preset context
       else
         throw "unknown preset '#{ build.target }'"
     else context.input
 
-export { wrap }
-export defaul wrap
+export { modularize }
+export default modularize
